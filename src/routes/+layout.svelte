@@ -26,9 +26,8 @@
 		</NavBrand>
 		<NavHamburger />
 		<NavUl>
-			<NavLi href="/" active={true}>Home</NavLi>
-			<NavLi href="/checkout">Checkout</NavLi>
-			<NavLi href="/history">History</NavLi>
+			<NavLi data-sveltekit-reload href="/" active={true}>Home</NavLi>
+			<NavLi data-sveltekit-reload href="/history">History</NavLi>
 		</NavUl>
 	</Navbar>
 
