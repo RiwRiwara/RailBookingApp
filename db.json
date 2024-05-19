@@ -1,0 +1,46 @@
+{
+    "trains": [
+      {
+        "id": 1,
+        "trainNumber": "12345",
+        "origin": "City A",
+        "destination": "City B",
+        "departureTime": "2024-05-19T08:00:00Z",
+        "arrivalTime": "2024-05-19T12:00:00Z",
+        "distance": 100,
+        "price": 20,
+        "numberSeats": 100
+      },
+      {
+        "id": 2,
+        "trainNumber": "67890",
+        "origin": "City C",
+        "destination": "City D",
+        "departureTime": "2024-05-20T10:00:00Z",
+        "arrivalTime": "2024-05-20T14:00:00Z",
+        "distance": 200,
+        "price": 20,
+        "numberSeats": 120
+      }
+    ],
+    "bookings": [
+      {
+        "id": 1,
+        "trainId": 1,
+        "passengerName": "John Doe",
+        "seatNumber": "12A",
+        "bookingDate": "2024-05-18T10:00:00Z",
+        "status": "confirmed"
+      },
+      {
+        "id": 2,
+        "trainId": 2,
+        "passengerName": "Jane Smith",
+        "seatNumber": "34B",
+        "bookingDate": "2024-05-19T15:00:00Z",
+        "status": "confirmed"
+      }
+    ],
+    "checkout": []
+  }
+  
