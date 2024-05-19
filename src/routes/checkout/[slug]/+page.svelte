@@ -2,17 +2,35 @@
 	import { ArrowRightAltSolid } from 'flowbite-svelte-icons';
 	/** @type {import('./$types').PageData} */
 	export let data;
+
+	let message = '';
+	async function submitForm(event) {
+		event.preventDefault();
+
+		if (confirm('Are you sure you want to book this ticket?')) {
+			try {
+				const formData = new FormData(event.target);
+				const response = await fetch(event.target.action, {
+					method: 'POST',
+					body: formData
+				});
+
+				if (!response.ok) {
+					throw new Error('Failed to book the ticket');
+				}
+				message = 'Ticket booked successfully.';
+				alert(message);
+				// reload the page
+				location.reload();
+			} catch (error) {
+				message = 'An error occurred while booking the ticket.';
+				alert(message);
+			}
+		}
+	}
 </script>
 
-<div style="margin-top: 5rem;">
-	<h1>Checkout to Home page</h1>
-	{#if data.train}
-		<div>
-			<h2>{data.train.origin} to {data.train.destination}</h2>
-			<p>Price: {data.train.price}</p>
-		</div>
-	{/if}
-</div>
+<div style="margin-top: 5rem;"></div>
 
 <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
 	<div
@@ -49,15 +67,25 @@
 		</div>
 	</div>
 
-	<form action="#" method="POST" class="mx-auto mt-4 max-w-xl sm:mt-4">
+	<form
+		action="?/booking"
+		method="POST"
+		class="mx-auto mt-4 max-w-xl sm:mt-4"
+		on:submit={submitForm}
+	>
+
 		<div class="my-6 flex flex-col items-center justify-center gap-4">
-			<div class="rounded-md w-full bg-gray-200 px-4 py-2">
+			<div class="w-full rounded-md bg-gray-200 px-4 py-2">
 				<p class="text-lg font-semibold text-gray-900">Ticket price: {data.train.price} Baht</p>
 			</div>
-			<div class="rounded-md w-full bg-gray-200 px-4 py-2">
-				<p class="text-lg font-semibold text-gray-900">Available Seat: {data.train.availableSeats} / {data.train.seatNumber} </p>
+			<div class="w-full rounded-md bg-gray-200 px-4 py-2">
+				<p class="text-lg font-semibold text-gray-900">
+					Available Seat: {data.train.availableSeats} / {data.train.numberSeats}
+				</p>
 			</div>
 		</div>
+		
+		<input type="hidden" name="id" value={data.train.id} />
 		<input type="hidden" name="trainNumber" value={data.train.trainNumber} />
 		<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 			<div class="sm:col-span-2">
@@ -66,9 +94,9 @@
 				>
 				<div class="mt-2.5">
 					<input
-						type="number"
-						value={data.train.seatNumber}
-						disabled
+						type="text"
+						value={data.train.seatNumberRandom}
+						readonly
 						name="seatNumber"
 						id="seatNumber"
 						class="block w-full rounded-md border-0 bg-gray-100 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -82,6 +110,7 @@
 				<div class="mt-2.5">
 					<input
 						type="text"
+						required
 						placeholder="Passenger Name"
 						name="passengerName"
 						id="passengerName"
@@ -98,6 +127,7 @@
 
 				<input
 					type="text"
+					required
 					name="mobileNumber"
 					id="mobileNumber"
 					autocomplete="tel"

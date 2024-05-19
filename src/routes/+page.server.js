@@ -14,8 +14,3 @@ async function getTrains() {
 
 
 
-/** @type {import('./$types').Actions} */
-export const actions = {
-	default: async (event) => {
-	}
-};
